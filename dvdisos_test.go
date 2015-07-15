@@ -11,7 +11,6 @@ import (
 )
 
 func TestIntegrationGetDvdIsos(t *testing.T) {
-	t.SkipNow()
 	dvdIsos, err := GetAPI().GetDvdIsos()
 	assert.Nil(t, err)
 
