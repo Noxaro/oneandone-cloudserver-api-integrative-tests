@@ -1,5 +1,5 @@
 language: go
 go:
-  - tip
+  - 1.4
 env:
   - TEST_SUITE=integration
