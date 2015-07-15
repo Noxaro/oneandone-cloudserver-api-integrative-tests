@@ -17,7 +17,7 @@ func init() {
 
 	token, err := getEnvironmentVar("token")
 	if err != nil {
-		log.Error("The 1&1 cloud server api endpoint must be set in the environment variable 'endpoint'")
+		log.Error("The 1&1 cloud server api token must be set in the environment variable 'token'")
 		os.Exit(1)
 	}
 
