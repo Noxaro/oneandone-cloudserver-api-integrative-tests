@@ -100,5 +100,12 @@ func TestIntegrationSharedStoragesServer(t *testing.T) {
 	accessPermission.DeleteServerPermission()
 
 	server.Delete()
-	sharedStorage.Delete()
+}
+
+func TestIntegrationSharedStorageDelete(t *testing.T){
+	sharedStorage, err := GetAPI().GetSharedStorage(sharedStorageId)
+	assert.Nil(t, err)
+
+	_, err = sharedStorage.Delete()
+	assert.Nil(t, err)
 }
