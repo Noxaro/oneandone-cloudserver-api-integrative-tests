@@ -14,8 +14,9 @@ var sharedStorageId = ""
 
 func TestIntegrationSharedStorageCreate(t *testing.T) {
 
+	storageName := "ITTestStorage" + GetTimestamp()
 	sharedStorageSettings := oaocs.SharedStorageSettings{
-		Name:        "ITTestStorage",
+		Name:        storageName,
 		Description: "Test",
 		Size:        100,
 	}
@@ -23,7 +24,7 @@ func TestIntegrationSharedStorageCreate(t *testing.T) {
 	sharedStorage, err := GetAPI().CreateSharedStorage(sharedStorageSettings)
 	assert.Nil(t, err)
 
-	assert.Equal(t, "ITTestStorage", sharedStorage.Name)
+	assert.Equal(t, storageName, sharedStorage.Name)
 	assert.Equal(t, "Test", sharedStorage.Description)
 	assert.Equal(t, 100, sharedStorage.Size)
 
@@ -34,8 +35,9 @@ func TestIntegrationSharedStorageUpdate(t *testing.T) {
 	sharedStorage, err := GetAPI().GetSharedStorage(sharedStorageId)
 	sharedStorage.WaitForState("ACTIVE")
 
+	storageName := "ITTestStorageRename" + GetTimestamp()
 	config := oaocs.SharedStorageSettings{
-		Name:        "ITTestStorage2",
+		Name:        storageName,
 		Description: "Test2",
 		Size:        200,
 	}
@@ -49,15 +51,18 @@ func TestIntegrationSharedStorageUpdate(t *testing.T) {
 	sharedStorage, err = GetAPI().GetSharedStorage(sharedStorageId)
 	assert.Nil(t, err)
 
-	assert.Equal(t, "ITTestStorage2", sharedStorage.Name)
+	assert.Equal(t, storageName, sharedStorage.Name)
 	assert.Equal(t, "Test2", sharedStorage.Description)
 	assert.Equal(t, 200, sharedStorage.Size)
 }
 
 func TestIntegrationSharedStoragesServer(t *testing.T) {
+	serverName := "IT Test Server" + GetTimestamp()
+	latestAppliance, err := GetAPI().ServerApplianceFindNewest("Linux", "Ubuntu", "Minimal", 64, true)
+	assert.Nil(t, err)
 	config := oaocs.ServerCreateData{
-		Name:        "IT Test Server",
-		ApplianceId: "C14988A9ABC34EA64CD5AAC0D33ABCAF",
+		Name:        serverName,
+		ApplianceId: latestAppliance.Id,
 		Hardware: oaocs.Hardware{
 			Vcores:            1,
 			CoresPerProcessor: 1,
@@ -102,7 +107,7 @@ func TestIntegrationSharedStoragesServer(t *testing.T) {
 	server.Delete()
 }
 
-func TestIntegrationSharedStorageDelete(t *testing.T){
+func TestIntegrationSharedStorageDelete(t *testing.T) {
 	sharedStorage, err := GetAPI().GetSharedStorage(sharedStorageId)
 	assert.Nil(t, err)
 
