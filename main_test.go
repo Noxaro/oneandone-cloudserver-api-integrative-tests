@@ -9,6 +9,8 @@ import (
 	oaocs "github.com/Noxaro/oneandone-cloudserver-api"
 	"github.com/docker/machine/log"
 	"os"
+	"strconv"
+	"time"
 )
 
 var api *oaocs.API
@@ -41,4 +43,8 @@ func getEnvironmentVar(name string) (string, error) {
 
 func GetAPI() *oaocs.API {
 	return api
+}
+
+func GetTimestamp() string {
+	return strconv.FormatInt(time.Now().UTC().UnixNano(), 10)
 }
