@@ -70,8 +70,10 @@ func TestIntegrationCreateMonitoringPolicy(t *testing.T) {
 		},
 	}
 
-	createdMonitoringPolicy, err := GetAPI().CreateMonitoringPolicy(monitoringPolicy)
+	cmp, err := GetAPI().CreateMonitoringPolicy(monitoringPolicy)
 	assert.Nil(t, err)
+
+	defer DeleteMonitoringPolicy(t, cmp)
 
 	monitoringPolicies, err := GetAPI().GetMonitoringPolicies()
 	assert.Nil(t, err)
@@ -113,7 +115,9 @@ func TestIntegrationCreateMonitoringPolicy(t *testing.T) {
 		assert.Equal(t, monitoringPolicies[index].Thresholds.InternalPing.Critical.Alert, monitoringPolicy.Thresholds.InternalPing.Critical.Alert)
 
 	}
+}
 
-	createdMonitoringPolicy.Delete()
-
+func DeleteMonitoringPolicy(t *testing.T, mp *oaocs.MonitoringPolicy){
+	_, err := mp.Delete()
+	assert.Nil(t, err)
 }
