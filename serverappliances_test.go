@@ -5,10 +5,10 @@
 package main
 
 import (
-	"testing"
-	"github.com/stretchr/testify/assert"
-	"time"
 	"github.com/docker/machine/log"
+	"github.com/stretchr/testify/assert"
+	"testing"
+	"time"
 )
 
 func TestIntegrationServerAppliancesGet(t *testing.T) {
@@ -33,7 +33,7 @@ func TestIntegrationServerAppliancesGet(t *testing.T) {
 	}
 }
 
-func TestIntegrationServerApplianceList(t *testing.T){
+func TestIntegrationServerApplianceList(t *testing.T) {
 	families, err := GetAPI().ServerApplianceListFamilies()
 	assert.Nil(t, err)
 	assert.True(t, len(families) >= 1)
