@@ -60,43 +60,43 @@ func TestIntegrationServerGet(t *testing.T) {
 func TestIntegrationServerLifecycle(t *testing.T) {
 	server, err := GetAPI().GetServer(serverId)
 	assert.Nil(t, err)
-	assert.Equal(t, "POWERED_ON", server.Status)
+	assert.Equal(t, "POWERED_ON", server.Status.State)
 
 	server.Shutdown(false)
 	server.WaitForState("POWERED_OFF")
 	state, err := server.GetStatus()
 	assert.Nil(t, err)
-	assert.Equal(t, "POWERED_OFF", state)
+	assert.Equal(t, "POWERED_OFF", state.State)
 
 	server.Start()
 	server.WaitForState("POWERED_ON")
 	state, err = server.GetStatus()
 	assert.Nil(t, err)
-	assert.Equal(t, "POWERED_ON", state)
+	assert.Equal(t, "POWERED_ON", state.State)
 
 	server.Shutdown(true)
 	server.WaitForState("POWERED_OFF")
 	state, err = server.GetStatus()
 	assert.Nil(t, err)
-	assert.Equal(t, "POWERED_OFF", state)
+	assert.Equal(t, "POWERED_OFF", state.State)
 
 	server.Start()
 	server.WaitForState("POWERED_ON")
 	state, err = server.GetStatus()
 	assert.Nil(t, err)
-	assert.Equal(t, "POWERED_ON", state)
+	assert.Equal(t, "POWERED_ON", state.State)
 
 	server.Reboot(false)
 	server.WaitForState("POWERED_ON")
 	state, err = server.GetStatus()
 	assert.Nil(t, err)
-	assert.Equal(t, "POWERED_ON", state)
+	assert.Equal(t, "POWERED_ON", state.State)
 
 	server.Reboot(true)
 	server.WaitForState("POWERED_ON")
 	state, err = server.GetStatus()
 	assert.Nil(t, err)
-	assert.Equal(t, "POWERED_ON", state)
+	assert.Equal(t, "POWERED_ON", state.State)
 }
 
 func TestIntegrationServerDelete(t *testing.T) {
